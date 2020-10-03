@@ -1,0 +1,24 @@
+{
+  "root": true,
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "globals": {
+    "Vue": false,
+    "weex": false
+  },
+  "extends": "standard",
+  "plugins": [
+    //    "vuefix"
+    "html"
+  ],
+  "rules": {
+    "arrow-parens": 0,
+    "semi": [
+      2,
+      "always"
+    ],
+    "generator-star-spacing": 0
+  }
+}

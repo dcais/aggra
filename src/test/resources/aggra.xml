@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-autowire="byName">
+
+
+  <bean id="pccm" class="com.dcais.aggra.spring.PoolingHttpClientConnectionManagerFactory">
+    <property name="defaultMaxPerRoute" value="50"/>
+    <property name="maxTotal" value="500"/>
+  </bean>
+
+  <bean id="proxyRule" class="com.dcais.aggra.common.ProxyRule">
+    <property name="proxy" value="${test.proxy.ip}"/>
+    <property name="useProxy" value="${test.proxy.on}"/>
+    <property name="forceUseLocalProxy" value="${test.proxy.on.force}"/>
+    <property name="closeWhenProxy" value="${test.proxy.on.closeWhenProxy}"/>
+    <property name="proxyUrlRegsExclude">
+      <list>
+        <value>${test.proxy.exclude}</value>
+      </list>
+    </property>
+  </bean>
+
+  <bean class="com.dcais.aggra.logger.BaseLoggerImpl"/>
+  <bean class="com.dcais.aggra.logger.NoLoggerImpl"/>
+
+  <bean id="httpClientRmi" class="com.dcais.aggra.client.HttpClient">
+    <property name="pccm" ref="pccm"/>
+    <!--<property name="proxyRule" ref="proxyRule"/>-->
+    <!--<property name="logMaxCharCountReq" value = "3" />-->
+  </bean>
+
+  <bean class="com.dcais.aggra.spring.MethodScannerConfigurer">
+    <property name="basePackage" value="com.dcais.aggra.request com.dcais.aggra.test.request"/>
+    <property name="annotationClass" value="com.dcais.aggra.annotation.HttpRequest"/>
+    <property name="httpClientBeanName" value="httpClientRmi"/>
+  </bean>
+
+</beans>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration debug="false">
+  <property name="COMMON_PATTERN"
+            value="[%d{'MM-dd HH:mm:ss,SSS',GMT+8:00}] %-5p [%X{IP}][%X{OP}][%.10t] %logger{36}[%L] - %m%n"/>
+  <property name="NOTIME__PATTERN"
+            value="[%d{'MM-dd HH:mm:ss,SSS',GMT+8:00}] %-5p [%X{IP}][%X{OP}][%.10t] %logger{36}[%L] - %m%n"/>
+
+  <property name="LOG_CHARSET" value="UTF-8"/>
+
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <charset>${LOG_CHARSET}</charset>
+      <!--<pattern>${COMMON_PATTERN}</pattern>-->
+      <pattern>${NOTIME__PATTERN}</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="com.yuanpin.common.http.logger.BaseLoggerImpl" additivity="false">
+    <level value="debug"/>
+    <appender-ref ref="CONSOLE"/>
+  </logger>
+
+
+  <root level="debug">
+    <appender-ref ref="CONSOLE"/>
+  </root>
+
+</configuration>
