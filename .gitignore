@@ -19,3 +19,4 @@ antx.properties*
 .factorypath
 tasks.json
 node_modules
+.history
