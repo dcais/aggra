@@ -55,13 +55,6 @@ public class DateUtils {
   private static final Logger logger = LoggerFactory.getLogger(DateUtils.class);
 
 
-  /**
-   * 获取当前星期几
-   * 0表示星期天
-   *
-   * @param date
-   * @return
-   */
   public static int getDayOfWeek(Date date) {
     Calendar cal = Calendar.getInstance();
     cal.setTime(date);
@@ -82,11 +75,6 @@ public class DateUtils {
     return DateUtils.formatToData(DateUtils.dateFormat(date, DateUtils.Y_M_D) + DAY_FIFTEEN_TIME, Y_M_D_HMS);
   }
 
-  /**
-   * 获取当月第一天
-   *
-   * @return
-   */
   public static Date getMonthFirstDay(Date date, Integer diffMonth) {
     Calendar cal = Calendar.getInstance();//获取当前日期
     cal.setTime(date);
@@ -107,11 +95,6 @@ public class DateUtils {
   }
 
 
-  /**
-   * 获取当月最后一天
-   *
-   * @return
-   */
   public static Date getMonthLastDay(Date date, Integer diffMonth) {
     Calendar cal = Calendar.getInstance();
     cal.setTime(date);
@@ -122,24 +105,12 @@ public class DateUtils {
   }
 
 
-  /**
-   * @param d1
-   * @param d2
-   * @return 1 d1比d2多1天
-   * 0 d1与d2同天
-   * －1 d1比d2少1天
-   */
   public static Long compareDays(Date d1, Date d2) {
     Long days1 = d1.getTime() / DAY_MILLIS;
     Long days2 = d2.getTime() / DAY_MILLIS;
     return days1 - days2;
   }
 
-  /**
-   * @param d1
-   * @param d2
-   * @return n d2大于d1的天数
-   */
   public static Integer diffDays(Date d1, Date d2) {
     Long diffHour = (d2.getTime() - d1.getTime()) / 1000 / 3600;
     return Integer.parseInt(String.valueOf(diffHour / 24)) + 1;
@@ -165,10 +136,6 @@ public class DateUtils {
     }
   }
 
-  /**
-   * @param date
-   * @return
-   */
   public static String smartFormat(Date date) {
     String dateStr = null;
     if (date == null) {
@@ -195,10 +162,6 @@ public class DateUtils {
     return dateStr;
   }
 
-  /**
-   * @param text
-   * @return
-   */
   public static Date smartFormat(String text) {
     Date date = null;
     try {
@@ -221,24 +184,10 @@ public class DateUtils {
     return date;
   }
 
-  /**
-   * 获取当前日期
-   *
-   * @param format
-   * @return
-   * @throws Exception
-   */
   public static String getNow(String format) throws Exception {
     return formatDate(new Date(), format);
   }
 
-  /**
-   * 格式化日期格式
-   *
-   * @param argDate
-   * @param argFormat
-   * @return 格式化后的日期字符串
-   */
   public static String formatDate(Date argDate, String argFormat) {
     if (argDate == null) {
       throw new RuntimeException("参数[日期]不能为空!");
@@ -250,13 +199,6 @@ public class DateUtils {
     return sdfFrom.format(argDate).toString();
   }
 
-  /**
-   * 把字符串格式化成日期
-   *
-   * @param argDateStr
-   * @param argFormat
-   * @return
-   */
   public static Date formatStringToDate(String argDateStr, String argFormat) {
     if (argDateStr == null || argDateStr.trim().length() < 1) {
       throw new RuntimeException("参数[日期]不能为空!");
@@ -280,11 +222,6 @@ public class DateUtils {
     }
   }
 
-  /**
-   * 获取当日最晚时间的时间戳
-   *
-   * @return
-   */
   public static Long getTodayLastTimestamp() {
     Date date = new Date();
     Calendar calendar = Calendar.getInstance();
@@ -316,13 +253,6 @@ public class DateUtils {
     return null;
   }
 
-  /**
-   * {date}日期的{days}天后
-   *
-   * @param date
-   * @param days
-   * @return
-   */
   public static Date afterNDays(Date date, int days) {
 
     if (date == null) {
@@ -348,13 +278,6 @@ public class DateUtils {
     return resultDate;
   }
 
-  /**
-   * {date}日期的{days}天后
-   *
-   * @param dateStr 格式(yyyy-MM-DD HH:mm:ss)
-   * @param days
-   * @return
-   */
   public static Date afterNDays(String dateStr, int days) {
 
     if (StringUtils.isBlank(dateStr)) {
@@ -365,24 +288,10 @@ public class DateUtils {
     return resultDate;
   }
 
-  /**
-   * {date}日期的{days}天前
-   *
-   * @param date
-   * @param days
-   * @return
-   */
   public static Date lastNDays(Date date, int days) {
     return afterNDays(date, -days);
   }
 
-  /**
-   * {date}日期的{days}天前
-   *
-   * @param dateStr
-   * @param days
-   * @return
-   */
   public static Date lastNDays(String dateStr, int days) {
     return afterNDays(dateStr, -days);
   }
@@ -397,13 +306,6 @@ public class DateUtils {
   }
 
 
-  /**
-   * 校验是否符合时间格式
-   *
-   * @param time
-   * @param argFormat
-   * @return
-   */
   public static boolean isValidTime(String time, String argFormat) {
     try {
       if (argFormat.equals(HM)) {
@@ -431,14 +333,6 @@ public class DateUtils {
     return true;
   }
 
-  /**
-   * 根据格式比较日期
-   *
-   * @param date1
-   * @param date2
-   * @param argFormat
-   * @return
-   */
   public static int compareDate(String date1, String date2, String argFormat) {
     int result = 0;
     try {
@@ -472,13 +366,6 @@ public class DateUtils {
     return dayForWeek;
   }
 
-  /**
-   * 本方法带有业务逻辑，用于杨梅节活动每期开奖<br/>
-   * 距离到2017-06-19 23:59:59（周一晚最后一秒）的周数
-   *
-   * @param date
-   * @return
-   */
   public static int originWeekNums(Date date) {
 
     String originDate = "2017-06-19 23:59:59";
@@ -496,12 +383,6 @@ public class DateUtils {
     return Integer.valueOf(String.valueOf(weeks));
   }
 
-  /**
-   * 本方法带有业务逻辑，用于开奖开始时间
-   *
-   * @param weeks
-   * @return
-   */
   public static Date startPrizeDate(int weeks) {
 
     String startDateStr = execPrizeDate(weeks) + " 00:00:00";
@@ -509,12 +390,6 @@ public class DateUtils {
     return convertStringToDate(startDateStr);
   }
 
-  /**
-   * 本方法带有业务逻辑，用于开奖结束时间
-   *
-   * @param weeks
-   * @return
-   */
   public static Date endPrizeDate(int weeks) {
 
     String startDateStr = execPrizeDate(weeks) + " 23:59:59";
@@ -522,12 +397,6 @@ public class DateUtils {
     return convertStringToDate(startDateStr);
   }
 
-  /**
-   * 本方法带有业务逻辑，用于计算开奖日期
-   *
-   * @param weeks
-   * @return
-   */
   private static String execPrizeDate(int weeks) {
 
     String originDate = "2017-06-19 23:59:59";

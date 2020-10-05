@@ -7,8 +7,8 @@ import com.github.dcais.aggra.cons.HttpConstants;
 import com.github.dcais.aggra.converter.StringConverter;
 import com.github.dcais.aggra.enu.HttpMethod;
 import com.github.dcais.aggra.spring.PropValFill;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.BeanFactory;
 
 import javax.lang.model.type.NullType;
@@ -21,10 +21,10 @@ import java.util.regex.Pattern;
 /**
  *
  */
-@Slf4j
 public class RequestBuilderParser<T> {
   private static final Pattern SLASH_TAIL_PATTERN = Pattern.compile("/$");
   private final static String BEAN_NAME_PROPVALFILL = className2BeanName(PropValFill.class);
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(RequestBuilderParser.class);
 
   private static String className2BeanName(Class clazz) {
     String clazzName = clazz.getSimpleName();

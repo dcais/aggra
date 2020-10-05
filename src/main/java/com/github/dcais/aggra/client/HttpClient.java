@@ -1,16 +1,16 @@
 package com.github.dcais.aggra.client;
 
 import com.github.dcais.aggra.common.ProxyRule;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 
-@Slf4j
 public class HttpClient {
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(HttpClient.class);
   private Integer timeout = 20 * 1000;
   private Integer connectionTimeout = 10 * 1000;
   private Integer retryCount = 1;

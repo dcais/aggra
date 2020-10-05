@@ -13,10 +13,9 @@ import com.github.dcais.aggra.test.result.tabs.TopicTabsQueryView;
 import com.github.dcais.aggra.test.result.tabs.TopicTabsView;
 import com.google.gson.Gson;
 import com.google.gson.internal.StringMap;
-
 import com.google.gson.reflect.TypeToken;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Header;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -31,10 +30,10 @@ import java.util.*;
 /**
  *
  */
-@Slf4j
 @Test
 @ContextConfiguration(locations = {"classpath:spring_base.xml"})
 public class TestMain extends AbstractTestNGSpringContextTests {
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(TestMain.class);
   @Autowired
   private TestRequest testRequest;
 

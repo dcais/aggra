@@ -2,17 +2,39 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <name>aggra</name>
+  <description>aggra is a package based on httpclient. aggra allows us to send http requests more conveniently in the project.</description>
+  <url>https://github.com/dcais/aggra</url>
+
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.github.dcais</groupId>
   <artifactId>aggra</artifactId>
-  <version>1.0-SNAPSHOT</version>
-
+  <version>1.0.1</version>
   <properties>
     <java-version>1.8</java-version>
     <spring-version>4.1.6.RELEASE</spring-version>
     <httpclient-version>4.5.5</httpclient-version>
   </properties>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>yingjie cai</name>
+      <email>dyingjie_cai@163.com</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git@github.com:dcais/aggra.git</connection>
+    <developerConnection>scm:git:git@github.com:dcais/aggra.git</developerConnection>
+    <url>git@github.com:dcais/aggra.git</url>
+  </scm>
+
   <build>
     <plugins>
       <plugin>
@@ -105,5 +127,76 @@
     </dependency>
   </dependencies>
 
+  <profiles>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.8</version>
+            <extensions>true</extensions>
+            <configuration>
+              <!-- 这里的id必须要和全局配置中的release id 一致 -->
+              <serverId>oss</serverId>
+              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+              <!-- 如果希望发布后自动执行close和release操作，此处可以调整为true -->
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.2.1</version>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.9.1</version>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.5</version>
+            <executions>
+              <execution>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
 
+      <distributionManagement>
+        <snapshotRepository>
+          <id>oss</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+          <id>oss</id>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+      </distributionManagement>
+    </profile>
+  </profiles>
 </project>

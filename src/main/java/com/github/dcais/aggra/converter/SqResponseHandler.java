@@ -1,6 +1,5 @@
 package com.github.dcais.aggra.converter;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -8,13 +7,14 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-@Slf4j
 public class SqResponseHandler implements ResponseHandler<String> {
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(SqResponseHandler.class);
   List<Header> heads;
 
   public List<Header> getHeads() {
@@ -25,12 +25,6 @@ public class SqResponseHandler implements ResponseHandler<String> {
     this.heads = heads;
   }
 
-  /**
-   * Returns the response body as a String if the response was successful (a
-   * 2xx status code). If no response body exists, this returns null. If the
-   * response was unsuccessful (>= 300 status code), throws an
-   * {@link HttpResponseException}.
-   */
   public String handleResponse(final HttpResponse response)
     throws HttpResponseException, IOException {
     if (heads != null) {

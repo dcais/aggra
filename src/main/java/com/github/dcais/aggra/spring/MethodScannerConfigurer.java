@@ -1,6 +1,6 @@
 package com.github.dcais.aggra.spring;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.PropertyValues;
@@ -26,10 +26,10 @@ import java.util.Map;
 
 import static org.springframework.util.Assert.notNull;
 
-@Slf4j
 public class MethodScannerConfigurer implements BeanDefinitionRegistryPostProcessor, InitializingBean, ApplicationContextAware, BeanFactoryAware, BeanNameAware {
 
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(MethodScannerConfigurer.class);
   private String basePackage;
 
   private boolean processPropertyPlaceHolders;

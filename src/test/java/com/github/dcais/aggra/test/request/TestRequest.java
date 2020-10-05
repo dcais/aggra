@@ -2,7 +2,6 @@ package com.github.dcais.aggra.test.request;
 
 
 import com.github.dcais.aggra.annotation.*;
-
 import com.github.dcais.aggra.cons.HttpConstants;
 import com.github.dcais.aggra.enu.HttpMethod;
 import com.github.dcais.aggra.test.result.Result;

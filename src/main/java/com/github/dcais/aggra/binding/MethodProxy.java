@@ -9,11 +9,11 @@ import com.github.dcais.aggra.logger.BaseLoggerImpl;
 import com.github.dcais.aggra.logger.HttpClientLogger;
 import com.github.dcais.aggra.request.RequestBuilder;
 import com.github.dcais.aggra.request.RequestBuilderParser;
-import lombok.extern.log4j.Log4j;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.protocol.HttpContext;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.BeanFactory;
 
 import javax.lang.model.type.NullType;
@@ -22,9 +22,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.Date;
 
-@Log4j
 public class MethodProxy<T> implements InvocationHandler {
   public static final String NO_STRCVT_EXCEP_MSG = "aggra Interface return type is not 'String' while no StringConverter present.";
+  private static final Logger log = Logger.getLogger(MethodProxy.class);
   private HttpClient httpClient;
   private final Class<T> methodInterface;
   private BeanFactory beanFactory;
