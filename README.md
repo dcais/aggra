@@ -1,5 +1,60 @@
 # aggra
 
+## 安装
+
+### maven
+
+```xml
+<dependency>
+  <groupId>com.github.dcais</groupId>
+  <artifactId>aggra</artifactId>
+  <version>1.0.1</version>
+</dependency>
+```
+
+### spring xml bean config
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-autowire="byName">
+
+
+  <bean id="pccm" class="com.github.dcais.aggra.spring.PoolingHttpClientConnectionManagerFactory">
+    <property name="defaultMaxPerRoute" value="50"/>
+    <property name="maxTotal" value="500"/>
+  </bean>
+
+  <bean id="proxyRule" class="com.github.dcais.aggra.common.ProxyRule">
+    <property name="proxy" value="${test.proxy.ip}"/>
+    <property name="useProxy" value="${test.proxy.on}"/>
+    <property name="forceUseLocalProxy" value="${test.proxy.on.force}"/>
+    <property name="closeWhenProxy" value="${test.proxy.on.closeWhenProxy}"/>
+    <property name="proxyUrlRegsExclude">
+      <list>
+        <value>${test.proxy.exclude}</value>
+      </list>
+    </property>
+  </bean>
+
+  <bean class="com.github.dcais.aggra.logger.BaseLoggerImpl"/>
+  <bean class="com.github.dcais.aggra.logger.NoLoggerImpl"/>
+
+  <bean id="httpClientRmi" class="com.github.dcais.aggra.client.HttpClient">
+    <property name="pccm" ref="pccm"/>
+  </bean>
+
+  <bean class="com.github.dcais.aggra.spring.MethodScannerConfigurer">
+    <property name="basePackage" value="com.github.dcais.aggra.request com.github.dcais.aggra.test.request"/>
+    <property name="annotationClass" value="com.github.dcais.aggra.annotation.HttpRequest"/>
+    <property name="httpClientBeanName" value="httpClientRmi"/>
+  </bean>
+
+</beans>
+
+```
+
 
 
 
@@ -93,5 +148,29 @@ public interface SimpleRequest {
 public interface SimpleRequest {
   @HttpAttr(method = HttpMethod.GET, url = "get")
   ReturnInfo headerTest(@ResponseHeaders List<Header> headers);
+}
+```
+
+### 用变量替换url
+
+使用@ReqUrlVariable
+用变量替换url中的userId
+```java
+@HttpRequest(url = "${test.domain.url}/")
+public interface TestRmiRequest2 {
+  @HttpAttr(method = HttpMethod.GET, url = "${test.domain.url.module}/user/{userId}", timeout = 30000)
+  String urlWithVariablePlaceHold(String a, @ReqUrlVariable("userId") Integer userId);
+}
+```
+
+### 上传文件
+
+使用@ReqFile标签指定需要上传的文件
+
+```java
+@HttpRequest(url = "${test.domain.url}/test", logMaxCharCountReq = HttpConstants.LMCC_ALL)
+public interface TestRequest {
+  @HttpAttr(method = HttpMethod.POST, url = "upload?param=1&msg=hello", logMaxCharCountRes = HttpConstants.LMCC_ALL)
+  List<UploadFileInfo> fileTest(@ReqParam("p1") String p1, @ReqFile(GIVE_FILENAME) File file, @ReqFile() File file2, @ReqFile() File file3, @ReqFile() File file4, @ReqFile() File file5);
 }
 ```
